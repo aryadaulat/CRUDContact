@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {deleteContact, getContact, postContact} from './actions';
+import {deleteContact, editContact, getContact, postContact} from './actions';
 import {Contacts} from '../../../types/ContactTypes';
 
 export interface ContactState {
@@ -57,6 +57,17 @@ export const contactSlice = createSlice({
     builder.addCase(deleteContact.pending, (state, _action) => {
       state.contacts.status = true;
     });
+    builder.addCase(editContact.fulfilled, (state, _action) => {
+      state.contacts.isRefresh = true;
+      state.contacts.status = false;
+    });
+    builder.addCase(editContact.rejected, (state, _action) => {
+      state.contacts.status = false;
+    });
+    builder.addCase(editContact.pending, (state, _action) => {
+      state.contacts.status = true;
+    });
+    // editContact
   },
 });
 

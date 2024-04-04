@@ -22,7 +22,7 @@ import {useAppDispatch} from '../../hooks/reduxHooks';
 import {editContact, postContact} from '../../store/feature/contact/actions';
 import {Alert} from 'react-native';
 
-const Create = ({route}: {route: any}) => {
+const Create = ({route, navigation}: {route: any; navigation: any}) => {
   const [firstName, setFirstName] = useState({value: '', error: false});
   const [lastName, setLastName] = useState({value: '', error: false});
   const [age, setAge] = useState({value: '', error: false});
@@ -161,8 +161,9 @@ const Create = ({route}: {route: any}) => {
               setLastName({value: '', error: false});
               setPicture(undefined);
               Alert.alert('Berhasil', 'Edit Data Berhasil');
+              navigation.setParams({data: null});
             } else if (res.payload === '') {
-              Alert.alert('Gagal', 'Gagal Update Data');
+              Alert.alert('Gagal Update Data', 'Pastikan Masukkan Nama Tanpa Spasi');
             }
           })
           .catch(error => {

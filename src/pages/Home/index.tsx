@@ -39,9 +39,9 @@ const Home = ({navigation}: {navigation: any}) => {
     return navigation.navigate('CreateStack', {data: item});
   }
 
-  async function deleteContactByID(id: string) {
+  async function deleteContactByID(item: Contact) {
     try {
-      await dispatch(deleteContact({id: id})).then(res => {
+      await dispatch(deleteContact({data: item})).then(res => {
         if (res.payload === '') {
           Alert.alert('Gagal ', 'Gagal Menghapus Contact');
         }
@@ -76,7 +76,7 @@ const Home = ({navigation}: {navigation: any}) => {
           editContact(data),
         )}
         {renderRightAction('Delete', 'red', 128, progress, () =>
-          deleteContactByID(data.id),
+          deleteContactByID(data),
         )}
       </View>
     );

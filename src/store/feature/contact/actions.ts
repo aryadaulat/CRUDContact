@@ -2,6 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {RootState} from '../../index';
 import {server} from '../../../config';
+import {Contact} from '../../../types/ContactTypes';
 
 const Server = axios.create({
   baseURL: server,
@@ -67,22 +68,24 @@ export const postContact = createAsyncThunk<
 export const deleteContact = createAsyncThunk<
   any,
   {
-    id: string;
+    data: Contact;
   },
   {state: RootState}
 >('deleteContact', async (datas, {rejectWithValue}) => {
   try {
-    const response = await Server.delete(`/contact/${datas.id}`, {
+    const response = await Server.delete(`/contact/${datas.data.id}`, {
       headers: {Accept: 'application/json'},
     });
+    console.log('response ', response);
 
     let messages = 'something went wrong';
     if (response.status !== 201) {
       throw new Error(messages);
     }
 
-    return {id: datas.id};
+    // return {id: datas.id};
   } catch (e: any) {
+    console.log('error ', e);
     return rejectWithValue(e.response.data);
   }
 });
